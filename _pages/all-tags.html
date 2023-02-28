@@ -1,0 +1,32 @@
+---
+layout: default
+title: All Tags
+permalink: /all-tags/
+---
+{% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+{% assign tag_words = site_tags | split:',' | sort %}
+
+<!-- begin all-tags -->
+<section class="all_tags__inner">
+  
+  <div class="container">
+    <div class="row">
+
+      {% for item in (0..site.tags.size) %}{% unless forloop.last %}
+      {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+      <div class="all_tags__info article animate">
+        <div class="article__inner">
+          <a class="all_tags__link" href="{{ site.baseurl }}/tags/?tag={{this_word}}">
+            <div>
+              <h2 class="all_tags__name">{{ this_word }}</h2>
+              <div class="all_tags__counter">{{ site.tags[this_word].size }} {% if site.tags[page.tag].size < 2 %}Post{% else %}Posts{% endif %}</div>
+            </div>
+          </a>
+        </div>
+      </div>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- end all-tags -->
